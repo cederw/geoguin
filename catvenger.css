@@ -3,14 +3,43 @@
     src: url(nagurip.ttf);
 }
 
+#about-cat {
+	background-color: rgba(0,0,0,.8);
+	bottom: 0px;
+	color: white;
+	padding: 5px;
+	position: fixed;
+	text-align: center;
+	width: 100%;
+}
+
 body {
-	background-color: #93E2D5;
+	/*background-color: #93E2D5;*/
+
 	margin: 0px;
 }
 
 
-#area {
+#catarea {
 	position: relative;
+	background-image: url(img/bkgd.png);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+#cat-container {
+	font-family: catFont;
+	font-size: 1.2em;
+	margin-left: 0px;
+	margin-right: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	width: 100%;
+}
+
+#cat-nav {
+	margin: 0px;
 }
 
 #header {
@@ -24,10 +53,6 @@ body {
 	overflow: hidden;
 }
 
-.modal-body div p {
-	line-height: 100px;
-}
-
 .modal-cat {
 	float: left;
 	margin-right: 1em;
@@ -39,6 +64,8 @@ body {
 }
 
 .cat {
-	width: 20vw;
+	/*max-width: 15vw;*/
+	width: 11vw;
+	height: 15vh;
 	position: absolute;
 }

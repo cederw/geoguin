@@ -32,6 +32,7 @@
 		session_start();
 		$_SESSION["user"] = $user;
 		$_SESSION["money"] = $money;
+		$_SESSION["userID"] = $id;
 		header("Location: cats.php");
 		die();
 

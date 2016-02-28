@@ -15,11 +15,26 @@
 <form action="newCat.php">
   <input type="text" name="name" value="Name">
   <input type="text" name="desc" value="Description">
+  <input id = "lat" type="hidden" name="lat" value="">
+  <input id = "lon" type="hidden" name="lon" value="">
   <input type="submit" value="Submit">
 </form>
 </div>
 
-
+<script>
+getLoc();
+function getLoc() {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(insertCoords);
+      } else { 
+          console.log("Geolocation is not supported by this browser.");
+      }
+  }
+  function insertCoords(position) {
+    $("#lat").value(position.coords.latitude);
+    $("#lon").value(position.coords.longitude);
+  }
+</script>
 <?php
 	close();
 ?>

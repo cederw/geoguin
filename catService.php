@@ -6,6 +6,12 @@
 	$lon = $_GET['lon'];
 	$dbh = getDB();
 
+	//give money
+
+	$stmt = "UPDATE user u  JOIN cat c ON c.userID = u.id SET u.money=u.money+".rand(10,100)." WHERE c.timeout < NOW()";
+	$dbh->exec($stmt);
+
+	//timeout cats
 	$stmt = "UPDATE cat SET userID=NULL, timeout=NULL WHERE timeout < NOW()";
 	$dbh->exec($stmt);	
 

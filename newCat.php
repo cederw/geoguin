@@ -21,7 +21,15 @@ include("mysql_connect.php");
 	$stmt = "UPDATE user SET money=money-100 WHERE id = ".$userID;
 	$dbh->exec($stmt);
 
-	$stmt = "INSERT INTO cat (lat, lon, name, `desc`, url, userID, timeout) VALUES (".$lat.",".$lon.",'".$name."','".$desc."',".'"img/trump.png"'.",".$userID.", NOW() + INTERVAL 6 HOUR)";
+	$url;
+	$stmt = "SELECT url FROM cat ORDER BY RAND() LIMIT 1;";
+	$rows = $dbh->query($stmt);
+	foreach ($rows as $row) {
+		$url = $row['url'];
+	}
+	
+
+	$stmt = "INSERT INTO cat (lat, lon, name, `desc`, url, userID, timeout) VALUES (".$lat.",".$lon.",'".$name."','".$desc."','".$url."',".$userID.", NOW() + INTERVAL 2 HOUR)";
 	$dbh->exec($stmt);
 	}
 	header("Location: cats.php");

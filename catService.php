@@ -35,7 +35,7 @@
 	if (count($newCats) > 0){
 		$k = array_rand($newCats);
 		$v = $newCats[$k];
-		$stmt = "UPDATE cat SET userID=".$userID.", timeout=NOW() + INTERVAL 6 HOUR WHERE id = ".$v['id'];
+		$stmt = "UPDATE cat SET userID=".$userID.", timeout=NOW() + INTERVAL 2 HOUR WHERE id = ".$v['id'];
 		$dbh->exec($stmt);	
 		$json["new"] = $v;
 	}

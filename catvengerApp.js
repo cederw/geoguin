@@ -53,7 +53,7 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 	}
 	function getCats(position) {
 	    $.ajax("catService.php?lat=" + position.coords.latitude 
-		  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID"))
+		  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
 		.done(function( data ) {
 			showCats(data);
 		})

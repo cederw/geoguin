@@ -1,5 +1,5 @@
 <head>
-	<title>Not Neko Atsume</title>
+	<title>Catvenger Hunt</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="catvenger.css" rel="stylesheet" type="text/css" />
 

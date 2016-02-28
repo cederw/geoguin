@@ -7,11 +7,11 @@
 	$dbh = getDB();
 
 	//give money
-	$stmt = "INSERT INTO money (userID, catID, amount) SELECT u.id, c.id, ".rand(10,100)." FROM user u JOIN cat c ON c.userID = u.id  WHERE c.timeout < NOW()";
+	$stmt = "INSERT INTO money (userID, catID, amount) SELECT u.id, c.id, '".rand(10,100)."' FROM user u JOIN cat c ON c.userID = u.id  WHERE c.timeout > NOW()";
 	$dbh->exec($stmt);
 
 	//timeout cats
-	$stmt = "UPDATE cat SET userID=NULL, timeout=NULL WHERE timeout < NOW()";
+	$stmt = "UPDATE cat SET userID=NULL, timeout=NULL WHERE timeout > NOW()";
 	$dbh->exec($stmt);	
 
 	// JSON to return
@@ -35,7 +35,7 @@
 	if (count($newCats) > 0){
 		$k = array_rand($newCats);
 		$v = $newCats[$k];
-		$stmt = "UPDATE cat SET userID=".$userID.", timeout=NOW() + INTERVAL 2 HOUR WHERE id = ".$v['id'];
+		$stmt = "UPDATE cat SET userID=".$userID.", timeout=NOW() + INTERVAL 2	 HOUR WHERE id = ".$v['id'];
 		$dbh->exec($stmt);	
 		$json["new"] = $v;
 	}

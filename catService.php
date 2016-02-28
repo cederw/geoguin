@@ -7,18 +7,23 @@
 	$dbh = getDB();
 
 	//give money
-	$stmt = "INSERT INTO money m (userID, catID, amount) SELECT u.id, c.id, ".rand(10,100)." FROM user u JOIN cat c ON c.userID = u.id  WHERE c.timeout < NOW()";
+	$stmt = "INSERT INTO money (userID, catID, amount) SELECT u.id, c.id, ".rand(10,100)." FROM user u JOIN cat c ON c.userID = u.id  WHERE c.timeout < NOW()";
 	$dbh->exec($stmt);
 
 	//timeout cats
 	$stmt = "UPDATE cat SET userID=NULL, timeout=NULL WHERE timeout < NOW()";
 	$dbh->exec($stmt);	
 
+	// JSON to return
+	$json = array();
+
     $stmt = "SELECT c.id, c.name, c.desc, c.url FROM cat c JOIN user u ON c.userID = u.id WHERE u.id = ".$userID;
 	// insert one row	
 	foreach ($dbh->query($stmt) as $row) {
 		$allCats[] = $row;
 	}
+
+ 	$json["cats"] = $allCats;
 
 	$stmt = "SELECT c.id, c.name, c.desc, c.url FROM cat c  WHERE (".$lat." BETWEEN lat - 0.0001 AND lat + 0.0001) AND (".$lon." BETWEEN lon - 0.0001 AND lon + 0.0001) AND userID IS NULL";
 	// insert one row	
@@ -27,10 +32,7 @@
 		$newCats[] = $row;
 	}
 
-	$json = array();
- 	$json["cats"] = $allCats;
-
-	if(count($newCats)>0){
+	if (count($newCats) > 0){
 		$k = array_rand($newCats);
 		$v = $newCats[$k];
 		$stmt = "UPDATE cat SET userID=".$userID.", timeout=NOW() + INTERVAL 6 HOUR WHERE id = ".$v['id'];

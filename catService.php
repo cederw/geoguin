@@ -7,7 +7,7 @@
 	$dbh = getDB();
 
 	//give money
-	$stmt = "INSERT INTO user u (userID, catID, amount) SELECT u.id, c.id, ".rand(10,100)." FROM user u JOIN cat c ON c.userID = u.id  WHERE c.timeout < NOW()";
+	$stmt = "INSERT INTO money m (userID, catID, amount) SELECT u.id, c.id, ".rand(10,100)." FROM user u JOIN cat c ON c.userID = u.id  WHERE c.timeout < NOW()";
 	$dbh->exec($stmt);
 
 	//timeout cats

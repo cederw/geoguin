@@ -52,7 +52,7 @@ function getLocation() {
 }
 function getCats(position) {
     $.ajax({
-	  url: "catservice.php?lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&userid="+userID,	  
+	  url: "catservice.php?lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&userid="+1,	  
 	})
 	  .done(function( data ) {
 	      console.log( data );

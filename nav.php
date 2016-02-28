@@ -27,9 +27,9 @@
         if ($loggedin) { ?>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-            	<li id="exclaim" ng-show="notif"><span class="glyphicon glyphicon-exclamation-sign"></span>
+            	<li id="exclaim" ng-show="notif"><img src="img/catcoin.png">
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$user." ($".$money.")"?> <span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$user." (<img src='img/catcoin.png'>".$money.")"?> <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a ng-click="openNotif()" href="#">Notifications</a></li>
                         <li><a href="order.php">Order a Cat</a></li>

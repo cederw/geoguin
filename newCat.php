@@ -15,15 +15,17 @@ include("mysql_connect.php");
 	}
 	$money = $_SESSION["money"];
 	$userID = $_SESSION["userID"];
+	if($money>=100){
+		$_SESSION["money"] = $_SESSION["money"] - 100;
 
-	if($money)>=100;
-	$_SESSION["money"] = $_SESSION["money"] - 100;
-
-	$stmt = "UPDATE user u   SET u.money=u.money-100 WHERE u.id = ".$userID;
+	$stmt = "UPDATE user SET money=money-100 WHERE id = ".$userID;
 	$dbh->exec($stmt);
 
-	$stmt = "INSERT INTO cat (lat, lon, name, desc, url, userID, timeout) VALUES ".$lat.",".$lon.",".$name.",".$desc.","."img/trump.jpg".",".$userID.", NOW() + INTERVAL 6 HOUR";
+	$stmt = "INSERT INTO cat (lat, lon, name, `desc`, url, userID, timeout) VALUES (".$lat.",".$lon.",'".$name."','".$desc."',".'"img/trump.png"'.",".$userID.", NOW() + INTERVAL 6 HOUR)";
 	$dbh->exec($stmt);
+	}
+	header("Location: cats.php");
+	
 //check if the user has enough money
 //update the money
 //insert the cat at current location

@@ -21,6 +21,7 @@
 				if ($row["name"] == $user && $row["password"] == $pw) {
 					$found = true;
 					$money = $row["money"];
+					$id = $row["id"];
 				}
 			}
 			if (!$found) {

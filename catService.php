@@ -45,17 +45,17 @@
 	$dbh->exec($stmt);
 
 	//find all the records for the money the user is getting
-	$stmt = "SELECT c.name, m.amount FROM cat c JOIN money m ON m.catID = c.id WHERE m.userID = ".$userID;
+	$stmt = "SELECT c.name, m.amount FROM cat c JOIN money m ON m.catID = c.id";
 	$rows = $dbh->query($stmt);
 	foreach ($rows as $row) {
 		$newMoney[] = $row;
 	}
-	if(count($newMoney)>0){
-			
+
+	if(count($newMoney)>0){		
 		$json["money"] = $newMoney;
 		//remove the displayed records
-		$stmt = "DELETE FROM money WHERE userID = ".$userID;
-		$dbh->exec($stmt);
+		// $stmt = "DELETE FROM money WHERE userID = ".$userID;
+		// $dbh->exec($stmt);
 	}
 
 	print json_encode($json);

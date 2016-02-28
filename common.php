@@ -8,13 +8,10 @@
 	<?php include("head.php"); ?>
 
 	<body ng-controller="CatCtrl">
-		<?php nav($logout); ?>
-		<div class="container-fluid">
-		<?php
+		<?php nav($logout); 
 	}
 
 	function close() { ?>
-		</div>
 	</body>
 <html>
 	<?php

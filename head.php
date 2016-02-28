@@ -15,8 +15,7 @@
 
 
 
-<link rel="icon" type="image/png"
- href="img/catcoin.png" />
+<link rel="icon" type="image/png" href="img/catcoin.png" />
 
 
 	<!-- Latest compiled and minified JavaScript -->

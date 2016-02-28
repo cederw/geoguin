@@ -3,6 +3,8 @@ $(function() {
 	neko.mousedown(nekoDown);
 	neko.mouseup(nekoUp);
 	neko.mousemove(nekoMove);
+
+	getLocation();
 });
 
 // Called when the mouse button is pressed down on a rectangle.
@@ -40,4 +42,21 @@ function nekoUp() {
 	$("#neko").attr("dragging", 0);
 }
 
+//get the location for the user
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(getCats);
+    } else { 
+        console.log("Geolocation is not supported by this browser.");
+    }
+}
+function getCats(position) {
+    $.ajax({
+	  url: "catService.php?lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&userid="+1,	  
+	})
+	  .done(function( data ) {
+	      console.log( data );
+	    
+	});
+}
 

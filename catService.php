@@ -7,8 +7,7 @@
 	$dbh = getDB();
 
 	//give money
-
-	$stmt = "UPDATE user u  JOIN cat c ON c.userID = u.id SET u.money=u.money+".rand(10,100)." WHERE c.timeout < NOW()";
+	$stmt = "INSERT INTO user u (userID, catID, amount) SELECT u.id, c.id, ".rand(10,100)." FROM user u JOIN cat c ON c.userID = u.id  WHERE c.timeout < NOW()";
 	$dbh->exec($stmt);
 
 	//timeout cats
@@ -38,5 +37,24 @@
 		$dbh->exec($stmt);	
 		$json["new"] = $v;
 	}
+
+	//give the user the money they have earned
+	$stmt = "UPDATE user u  JOIN money m ON m.userID = u.id SET u.money=u.money+m.amount WHERE u.id = ".$userID;
+	$dbh->exec($stmt);
+
+	//find all the records for the money the user is getting
+	$stmt = "SELECT c.name, m.amount FROM cat c JOIN money m ON m.catID = c.id WHERE m.userID = ".$userID;
+	$rows = $dbh->query($stmt);
+	foreach ($rows as $row) {
+		$newMoney[] = $row;
+	}
+	if(count($newMoney)>0){
+			
+		$json["money"] = $newMoney;
+		//remove the displayed records
+		$stmt = "DELETE FROM money WHERE userID = ".$userID;
+		$dbh->exec($stmt);
+	}
+
 	print json_encode($json);
 ?>

@@ -70,6 +70,13 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 				var img = $("<img>").attr("src", thisCat.url)
 						.attr("alt", "a cat")
 						.addClass("cat")
+						.hover(
+						  function() {
+						    $( this ).attr("src", this.src.substring(0,this.src.length-4)+'_hang.jpg');
+						  }, function() {
+						    $( this ).attr("src", this.src.substring(0,this.src.length-9)+'.jpg');
+						  }
+						)
 						.dblclick(function() {
 							catClicked(thisCat);
 						})
@@ -98,4 +105,7 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 		console.log("there was a new cat");
 		console.log(json.new);
 	}
+
+
+
 }]);

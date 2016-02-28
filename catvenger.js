@@ -51,13 +51,28 @@ function getLocation() {
     }
 }
 function getCats(position) {
-    $.ajax({
-	  url: "catService.php?lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&userid="+1,	  
+    $.ajax("catService.php?lat=" + position.coords.latitude 
+	  		+ "&lon=" + position.coords.longitude + "&userid="+1)
+	.done(function( data ) {
+		showCats(data);
 	})
-	  .done(function( data ) {
-	      console.log( data );
-	    
+	.fail(function(x) {
+		console.log("fail: " + x);
 	});
+}
+
+function showCats(data) {
+	var json = data;
+	var area = $("#catarea");
+	for (var i = 0; i < json.cats.length; i++) {
+		console.log(json.cats[i]);
+		if (json.cats[i].url.match(/\.jpg/)) {
+			var img = $("<img>").attr("src", json.cats[i].url)
+					.attr("alt", "a cat")
+					.addClass("cat");
+			area.append(img);
+		}
+	}
 }
 
 function newCat() {

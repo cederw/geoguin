@@ -10,11 +10,8 @@
 	include("common.php");
 	open(true);
 ?>
-
-		<div id="catarea">
-			<img id="neko" src="penguin.jpg" />
-		</div>
-
+<div id="catarea">
+</div>
 <?php
 	close();
 ?>

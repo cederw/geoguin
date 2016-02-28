@@ -15,7 +15,7 @@
 		$allCats[] = $row;
 	}
 
-	$stmt = "SELECT c.id, c.name, c.desc, c.url FROM cat c  WHERE (".$lat." BETWEEN lat - 0.001 AND lat + 0.001) AND (".$lon." BETWEEN lon - 0.001 AND lon + 0.001) AND userID IS NULL";
+	$stmt = "SELECT c.id, c.name, c.desc, c.url FROM cat c  WHERE (".$lat." BETWEEN lat - 0.0001 AND lat + 0.0001) AND (".$lon." BETWEEN lon - 0.0001 AND lon + 0.0001) AND userID IS NULL";
 	// insert one row	
 	$rows = $dbh->query($stmt);
 	foreach ($rows as $row) {

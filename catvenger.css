@@ -8,6 +8,10 @@ body {
 	margin: 0px;
 }
 
+* {
+	background-color: #93E2D5;
+}
+
 #area {
 	position: relative;
 }

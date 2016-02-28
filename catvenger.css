@@ -1,5 +1,5 @@
 @font-face {
-    font-family: myFirstFont;
+    font-family: catFont;
     src: url(nagurip.ttf);
 }
 
@@ -15,16 +15,16 @@ body {
 
 #header {
 	color: #1d1d1d;
-	font-family: myFirstFont, Helvetica, sans-serif;
+	font-family: catFont, Helvetica, sans-serif;
 	font-size: 28pt;
 	text-align: center;
 }
 
-#neko {
-	width: 250px;
-	position: absolute;
+.navbar-brand {
+	font-family: catFont, Helvetica, sans-serif;
 }
 
 .cat {
 	width: 200px;
+	position: absolute;
 }

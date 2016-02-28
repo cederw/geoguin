@@ -1,5 +1,7 @@
 <?php
     function nav($logout) { 
+    	session_start();
+    	$user = $_SESSION["user"];
 ?>
 
 <nav class="navbar navbar-default">
@@ -24,9 +26,12 @@
         if ($logout) { ?>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="logout.php">Logout</a>
-                </li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$user?> <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="logout.php">Logout</a></li>
+					</ul>
+				</li>
         	</ul>
         </div><!-- /.navbar-collapse -->
     <?php 

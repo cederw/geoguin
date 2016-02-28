@@ -2,7 +2,11 @@
 	<title>Not Neko Atsume</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="catvenger.css" rel="stylesheet" type="text/css" />
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="catvengerApp.js"></script>
+
 	<script src="catvenger.js" type="text/javascript"></script>
 
 
@@ -14,4 +18,6 @@
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script src="scripts/jquery.ui.touch-punch.min.js"></script>
 </head>

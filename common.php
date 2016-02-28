@@ -4,10 +4,10 @@
 ?>
 
 <!DOCTYPE html>
-<html>
+<html ng-app="catvenger">
 	<?php include("head.php"); ?>
 
-	<body>
+	<body ng-controller="CatCtrl">
 		<?php nav($logout); ?>
 		<div class="container-fluid">
 		<?php

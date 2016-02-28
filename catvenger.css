@@ -42,6 +42,10 @@ body {
 	margin: 0px;
 }
 
+#exclaim {
+	line-height: 50px;
+}
+
 #header {
 	color: #1d1d1d;
 	font-family: catFont, Helvetica, sans-serif;

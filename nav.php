@@ -19,7 +19,7 @@
 	        <?php 
 	        }
 	        ?>
-	        <a class="navbar-brand" href="#">the catvenger hunt</a>
+	        <a class="navbar-brand" href="index.php">the catvenger hunt</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -27,12 +27,15 @@
         if ($loggedin) { ?>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
+            	<li id="exclaim" ng-show="notif"><span class="glyphicon glyphicon-exclamation-sign"></span>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$user." ($".$money.")"?> <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="logout.php">Logout</a></li>
 						<li><a ng-click="openNotif()" href="#">Notifications</a></li>
                         <li><a href="order.php">Order a Cat</a></li>
+                        <li><a href="map.php">Scout Cats</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="logout.php">Logout</a></li>
 					</ul>
 				</li>
         	</ul>

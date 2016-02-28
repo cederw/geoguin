@@ -22,8 +22,8 @@
 	foreach ($dbh->query($stmt) as $row) {
 		$allCats[] = $row;
 	}
-
- 	$json["cats"] = $allCats;
+	if (count($allCats) > 0) 
+	 	$json["cats"] = $allCats;
 
 	$stmt = "SELECT c.id, c.name, c.desc, c.url FROM cat c  WHERE (".$lat." BETWEEN lat - 0.0001 AND lat + 0.0001) AND (".$lon." BETWEEN lon - 0.0001 AND lon + 0.0001) AND userID IS NULL";
 	// insert one row	
@@ -45,7 +45,8 @@
 	$dbh->exec($stmt);
 
 	//find all the records for the money the user is getting
-	$stmt = "SELECT c.name, m.amount FROM cat c JOIN money m ON m.catID = c.id";
+	// $stmt = "SELECT c.name, m.amount FROM cat c JOIN money m ON m.catID = c.id"; for testing purposes
+	$stmt = "SELECT c.name, m.amount FROM cat c JOIN money m ON m.catID = c.id WHERE m.userID = ".$userID;
 	$rows = $dbh->query($stmt);
 	foreach ($rows as $row) {
 		$newMoney[] = $row;
@@ -54,8 +55,8 @@
 	if(count($newMoney)>0){		
 		$json["money"] = $newMoney;
 		//remove the displayed records
-		// $stmt = "DELETE FROM money WHERE userID = ".$userID;
-		// $dbh->exec($stmt);
+		$stmt = "DELETE FROM money WHERE userID = ".$userID;
+		$dbh->exec($stmt);
 	}
 
 	print json_encode($json);

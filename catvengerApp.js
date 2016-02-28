@@ -2,6 +2,7 @@ var catvengerApp = angular.module('catvenger', []);
 
 catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 	$scope.displayAbout = false;
+	$scope.notif = false;
 	$(function() {
 		$("#catarea").height($(document).height());
 		getLocation();
@@ -12,6 +13,7 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 	}
 
 	$scope.clearNotif = function() {
+		$scope.notif = false;
 		$("#money-title").empty().html("No notifications");
 		$("#money").empty().html("Check back later.");
 	}
@@ -45,41 +47,9 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 						.attr("catName", thisCat.name)
 						.attr("catDesc", thisCat.desc)
 						.addClass("cat")
-						// .hover(
-						//   function() {
-						//     $( this ).attr("src", this.src.replace(/\.png/, "")+'_hang.png');
-						//   }, function() {
-						//     $( this ).attr("src", this.src.replace(/_hang\.png/, ".png"));
-						//   }
-						// )
-						// .click(function() {
-						// 	   	$scope.catName = $(this).attr("catName");
-						// 		$scope.catDesc = $(this).attr("catDesc");
-						// 		$scope.displayAbout = true;
-						// 		$scope.$apply();
-						// })
-						// .on("taphold", function(){
-						//  	console.log($(this).hasClass(".ui-draggable-dragging") );
-				  //           if (!$(this).hasClass(".ui-draggable-dragging") ) {
-			   //              	$scope.catName = $(this).attr("catName");
-						// 		$scope.catDesc = $(this).attr("catDesc");
-						// 		$scope.$apply();
-						// 		$("#catModal").modal();
-				  //           } 
-			   //      	})
-						// .dblclick(function(){
-						//  	console.log($(this).hasClass(".ui-draggable-dragging") );
-				  //           if (!$(this).hasClass(".ui-draggable-dragging") ) {
-			   //              	$scope.catName = $(this).attr("catName");
-						// 		$scope.catDesc = $(this).attr("catDesc");
-						// 		$scope.$apply();
-						// 		$("#catModal").modal();
-				  //           } 
-			   //      	})
 						.draggable({ containment: "#catarea", scroll: false,
 								start: function() {
 						   			$(this).attr("src", this.src.replace(/\.png/, "")+'_hang.png');
-
 								 	$scope.catName = $(this).attr("catName");
 									$scope.catDesc = $(this).attr("catDesc");
 									$scope.displayAbout = true;
@@ -100,21 +70,19 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 		}
 	}
 
-	// function catClicked(e) {
-	// 	console.log(e);
-	// 	$scope.catName = $(this).attr("catName");
-	// 	$scope.catDesc = $(this).attr("catDesc");
-	// 	$scope.$apply();
-	// 	$("#catModal").modal();
-	// }
-
 	function newMoney(json) {
-		$("#money-title").html("You got new money!");
+		$scope.notif = true;
+		$scope.$apply();
+
+		$("#money-title").html("You got some coins!");
 		var list = $("<ul>");
 		for (var i = 0; i < json.money.length; i++) {
 			var name = json.money[i].name;
 			var amount = json.money[i].amount;
+			var item = $("<li>").html(name + " gave you " + amount + " coins!");
+			list.append(item);
 		}
+		$("#money").append(list);
 	}
 
 	function newCat(json) {
@@ -126,7 +94,6 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 
 		$("#newCatModal").modal();
 	
-		$scope.$apply();
 		console.log("there was a new cat");
 	}
 }]);

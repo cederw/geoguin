@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <?php
+	include("mysql_connect.php");
 	$userID = $_GET['userid'];
 	$lat = $_GET['lat'];
 	$lon = $_GET['lon'];
-	$dbh = new PDO('mysql:host=localhost;port=3306;dbname=cederw_cats', 'cederw_cats', 'cats2!', array( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION));
-
+	$dbh = getDB();
 
 	$stmt = "UPDATE cat SET userID=NULL, timeout=NULL WHERE timeout < NOW()";
 	$dbh->query($stmt);	
@@ -13,7 +13,7 @@
 	// insert one row	
 	foreach ($dbh->query($stmt) as $row) {
 		//echo $row['name'];
-		$customer[] = $row;
+		$customer2[] = $row;
 	}
 
      $stmt = "SELECT c.id, c.name, c.desc, c.url FROM cat c  WHERE (".$lat." BETWEEN lat - 0.00001 AND lat + 0.00001) AND (".$lon." BETWEEN lon - 0.00001 AND lon + 0.00001) AND userID IS NULL";
@@ -29,8 +29,11 @@
 		$v = $struct['Cats'][$k];
 		$stmt = "UPDATE cat SET userID=".$userID.", timeout=NOW() + INTERVAL 6 HOUR WHERE id = ".$v['id'];
 		$dbh->query($stmt);	
-		print json_encode($v);
+		$customer2[] = $v;
 	}
+
+	$struct2 = array("Cat" => $customer2);
+	print json_encode($struct2)
 	
 
 	//select a random cat from the array

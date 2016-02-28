@@ -8,11 +8,13 @@ body {
 	margin: 0px;
 }
 
+
 #area {
 	position: relative;
 }
 
 #header {
+	color: #1d1d1d;
 	font-family: myFirstFont, Helvetica, sans-serif;
 	font-size: 28pt;
 	text-align: center;

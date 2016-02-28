@@ -4,6 +4,7 @@
 	// if validated user, then goes back to index.php with credentials
 	$user = htmlspecialchars($_POST["user"]);
 	$pw = htmlspecialchars($_POST["password"]);
+	$money = 0;
 	$conn = getDB();
 	try {
 		$stmt = "SELECT * FROM user WHERE name = '" . $user . "'";
@@ -19,6 +20,7 @@
 			foreach ($rows as $row) {
 				if ($row["name"] == $user && $row["password"] == $pw) {
 					$found = true;
+					$money = $row["money"];
 				}
 			}
 			if (!$found) {
@@ -29,6 +31,7 @@
 	
 		session_start();
 		$_SESSION["user"] = $user;
+		$_SESSION["money"] = $money;
 		header("Location: cats.php");
 		die();
 

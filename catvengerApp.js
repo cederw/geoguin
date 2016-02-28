@@ -38,7 +38,7 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 	}
 
 	function showCats(json) {
-		var area = $("#cats");
+		var area = $("#catarea");
 		for (var i = 0; i < json.cats.length; i++) {
 			var thisCat = json.cats[i];
 			if (thisCat.url.match(/\.png/)) {
@@ -56,17 +56,22 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 									$scope.$apply();
 								}, stop: function (helper, ui) {
 						    		$(this).attr("src", this.src.replace(/_hang\.png/, ".png"));
-								}});
+						}});
 				area.append(img);
+				console.log("height: " + area.height() + ", width: " + area.width());
+				var randY = parseInt((area.height() / 2 * 3) * Math.random());
+				var randX = parseInt((area.width() / 2 * 3) * Math.random());
+				// if (randY < 50) {
+				// 	randY += 50;
+				// }
+				img.css({'top' : randY + 'px'});
+				img.css({'left' : randX + 'px'});
+				console.log("randY: " + randY + ", randX: " + randX);
 			}
 		}
 
 		if (json.new) {
 			newCat(json);
-		}
-
-		if (json.money) {
-			newMoney(json);
 		}
 	}
 

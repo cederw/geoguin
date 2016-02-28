@@ -1,5 +1,5 @@
 <?php
-    function nav($loggedin) { 
+    function nav($loggedin, $cats) { 
     	session_start();
     	$user = $_SESSION["user"];
         $money = $_SESSION["money"];
@@ -27,10 +27,16 @@
         if ($loggedin) { ?>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-            	<li id="exclaim" ng-show="notif"><span class="glyphicon glyphicon-exclamation-sign"></span>
+            	<?php
+					if ($cats) {
+				?>
+            	<li id="exclaim" ng-show="notif"><span class="glyphicon glyphicon-exclamation-sign"></span></li>
+				<?php } ?>
+            	
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$user." ($".$money.")"?> <span class="caret"></span></a>
 					<ul class="dropdown-menu">
+						
 						<li><a ng-click="openNotif()" href="#">Notifications</a></li>
                         <li><a href="order.php">Order a Cat</a></li>
                         <li><a href="map.php">Scout Cats</a></li>

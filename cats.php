@@ -20,7 +20,7 @@
 	</head>
 
 	<body ng-controller="CatCtrl">
-		<?php nav(true); ?>
+		<?php nav(true, true); ?>
 
 		<div class="container" id="cat-container">
 			<input type="hidden" id="userID" value="<?=$userID?>">

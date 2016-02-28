@@ -11,8 +11,8 @@
 	$dbh->exec($stmt);
 
 	//timeout cats
-	$stmt = "UPDATE cat SET userID=NULL, timeout=NULL WHERE timeout > NOW()";
-	$dbh->exec($stmt);	
+	// $stmt = "UPDATE cat SET userID=NULL, timeout=NULL WHERE timeout > NOW()";
+	// $dbh->exec($stmt);	
 
 	// JSON to return
 	$json = array();

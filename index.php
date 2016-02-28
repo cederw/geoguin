@@ -17,7 +17,7 @@
 	</head>
 
 	<body ng-controller="CatCtrl">
-		<?php nav(false); ?>
+		<?php nav(false, true); ?>
 
 		<div class="container">
 		<?php
@@ -30,7 +30,6 @@
 			</div>
 		<?php
 			include("login.php");
-			close();
 		?>
 	</body>
 <html>

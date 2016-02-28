@@ -26,6 +26,7 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 	        console.log("Geolocation is not supported by this browser.");
 	    }
 	}
+	
 	function getCats(position) {
 	    $.ajax("catService.php?lat=" + position.coords.latitude 
 		  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
@@ -37,10 +38,10 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 		});
 	}
 
-	function showCats(json) {
-		var area = $("#catarea");
-		for (var i = 0; i < json.cats.length; i++) {
-			var thisCat = json.cats[i];
+	function showCat(catArr) {
+		var area = $("#cats");
+		for (var i = 0; i < catArr.length; i++) {
+			var thisCat = catArr[i];
 			if (thisCat.url.match(/\.png/)) {
 				var img = $("<img>").attr("src", thisCat.url)
 						.attr("alt", "a cat")
@@ -56,22 +57,31 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 									$scope.$apply();
 								}, stop: function (helper, ui) {
 						    		$(this).attr("src", this.src.replace(/_hang\.png/, ".png"));
-						}});
+								}});
+	
+				// var randX = area.width() * Math.random();
+				// var randY = area.height() * Math.random();
+
+				// img.css({"top": randY + "px", "left": randX + "px"});
 				area.append(img);
-				console.log("height: " + area.height() + ", width: " + area.width());
-				var randY = parseInt((area.height() / 2 * 3) * Math.random());
-				var randX = parseInt((area.width() / 2 * 3) * Math.random());
-				// if (randY < 50) {
-				// 	randY += 50;
-				// }
-				img.css({'top' : randY + 'px'});
-				img.css({'left' : randX + 'px'});
-				console.log("randY: " + randY + ", randX: " + randX);
 			}
 		}
+	}
 
-		if (json.new) {
-			newCat(json);
+	function showCats(json) {
+		if (json) {
+
+			if (json.cats) {
+				showCat(json.cats);
+			}
+			if (json.new) {
+				newCat(json);
+				showCat(json.new);
+			}
+
+			if (json.money) {
+				newMoney(json);
+			}
 		}
 	}
 
@@ -96,9 +106,6 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 		$scope.catDesc = thisCat.desc;
 		$scope.catSrc = thisCat.url;
 		$scope.$apply();
-
 		$("#newCatModal").modal();
-	
-		console.log("there was a new cat");
 	}
 }]);

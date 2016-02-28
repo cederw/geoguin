@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <?php
+	include("mysql_connect.php");
 	$userID = $_GET['userid'];
 	$lat = $_GET['lat'];
 	$lon = $_GET['lon'];
 	$dbh = getDB();
-
 
 	$stmt = "UPDATE cat SET userID=NULL, timeout=NULL WHERE timeout < NOW()";
 	$dbh->query($stmt);	

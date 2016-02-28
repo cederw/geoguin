@@ -31,7 +31,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$user." ($".$money.")"?> <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="logout.php">Logout</a></li>
-                        <li><a href="logout.php">Order a Cat</a></li>
+                        <li><a href="order.php">Order a Cat</a></li>
 					</ul>
 				</li>
         	</ul>

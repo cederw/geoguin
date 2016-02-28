@@ -10,7 +10,7 @@
 	open(false);
 	if (isset($_GET["fail"]) && $_GET["fail"] == "true") {
 ?>
-	<div class="row">you failed</div>
+	<div class="alert alert-danger" role="alert">Wrong password. Please try again</div>
 <?php
 	}
 	include("login.php");

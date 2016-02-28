@@ -13,7 +13,7 @@ body {
 	position: relative;
 }
 
-#header, .navbar-header {
+#header {
 	color: #1d1d1d;
 	font-family: myFirstFont, Helvetica, sans-serif;
 	font-size: 28pt;

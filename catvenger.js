@@ -20,7 +20,7 @@ function nekoDown(event) {
 // If this is done while the mouse button is held down, drags a rectangle.
 function nekoMove(event) {
 	var neko = $(this);
-	var area = $("#area");
+	var area = $("#catarea");
 	if(neko.attr("dragging") == 1) {
 		var dy = event.clientY - neko.attr("prevY");
 		var dx = event.clientX - neko.attr("prevX");
@@ -58,5 +58,9 @@ function getCats(position) {
 	      console.log( data );
 	    
 	});
+}
+
+function newCat() {
+
 }
 

@@ -11,7 +11,7 @@
 	open(true);
 ?>
 
-		<div id="area">
+		<div id="catarea">
 			<img id="neko" src="penguin.jpg" />
 		</div>
 

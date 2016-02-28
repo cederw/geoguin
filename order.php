@@ -31,8 +31,8 @@ function getLoc() {
       }
   }
   function insertCoords(position) {
-    $("#lat").value(position.coords.latitude);
-    $("#lon").value(position.coords.longitude);
+    $("#lat").val(position.coords.latitude);
+    $("#lon").val(position.coords.longitude);
   }
 </script>
 <?php

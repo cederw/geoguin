@@ -6,11 +6,12 @@
 		session_destroy();
 		header("Location: index.php");
 	}
+  $userID = $_SESSION["userID"];
 
 	include("common.php");
 	open(true);
 ?>
-
+<input type="hidden" id="userID" value="<?=$userID?>">
 
 <div id="catarea">
 </div>

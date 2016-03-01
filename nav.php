@@ -1,4 +1,6 @@
 <?php
+	// $cats tells whether or not we are on cats.php
+	// $loggedin says whether or not we are logged in
     function nav($loggedin, $cats) { 
     	session_start();
     	$user = $_SESSION["user"];
@@ -19,22 +21,21 @@
 	        <?php 
 	        }
 	        ?>
-	        <a class="navbar-brand" href="index.php">the catvenger hunt</a>
+	        <a <?php 
+            $loc = "index.php";
+            if($cats) { $loc="#"; ?>ng-click="home()"<?php }  ?> class="navbar-brand" href="<?=$loc?>">the catvenger hunt</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <?php 
-        if ($loggedin) { ?>
+     
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-            	<?php
-					if ($cats) {
+        	   <?php 
+        			if ($cats) { 
 				?>
-            	<li id="exclaim" ng-show="notif"><span class="glyphicon glyphicon-exclamation-sign"></span></li>
-				<?php } ?>
-            	
+            	<li id="exclaim" ng-click="openNotif()" ng-show="notif"><img src="img/catcoin.png" /></li>
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$user." ($".$money.")"?> <span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user}} (<img src='img/catcoin.png'>{{money}})<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						
 						<li><a ng-click="openNotif()" href="#">Notifications</a></li>
@@ -44,11 +45,16 @@
                         <li><a href="logout.php">Logout</a></li>
 					</ul>
 				</li>
+				<?php 
+			        } else if ($loggedin) {
+	        	?>
+        		<li><a href="cats.php">Back</a></li>
+    			<?php
+			        }
+			    ?>
         	</ul>
         </div><!-- /.navbar-collapse -->
-    <?php 
-        }
-    ?>
+    
     </div><!-- /.container-fluid -->
 </nav>
 

@@ -13,10 +13,16 @@ include("mysql_connect.php");
 		session_destroy();
 		header("Location: index.php");
 	}
+
 	$money = $_SESSION["money"];
 	$userID = $_SESSION["userID"];
 	if($money>=100){
 		$_SESSION["money"] = $_SESSION["money"] - 100;
+	} else {
+		// sanity check; user shouldn't be able to submit a form if
+		// they don't have enough money
+		header("Location: cats.php");
+	}
 
 	$stmt = "UPDATE user SET money=money-100 WHERE id = ".$userID;
 	$dbh->exec($stmt);
@@ -27,12 +33,12 @@ include("mysql_connect.php");
 	foreach ($rows as $row) {
 		$url = $row['url'];
 	}
-	
 
 	$stmt = "INSERT INTO cat (lat, lon, name, `desc`, url, userID, timeout) VALUES (".$lat.",".$lon.",'".$name."','".$desc."','".$url."',".$userID.", NOW() + INTERVAL 2 HOUR)";
 	$dbh->exec($stmt);
-	}
-	header("Location: cats.php");
+
+	// finished, so go back to home
+	header("Location: cats.php?dontletdremesbememes");
 	
 //check if the user has enough money
 //update the money

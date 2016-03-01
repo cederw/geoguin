@@ -43,10 +43,11 @@ body {
 }
 
 #exclaim {
-	line-height: 50px;
+	line-height: 60px;
 }
 
-#header {
+
+h1, #header {
 	color: #1d1d1d;
 	font-family: catFont, Helvetica, sans-serif;
 	font-size: 28pt;

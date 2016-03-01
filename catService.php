@@ -7,12 +7,24 @@
 	$dbh = getDB();
 
 	//give money
-	$stmt = "INSERT INTO money (userID, catID, amount) SELECT u.id, c.id, '".rand(10,100)."' FROM user u JOIN cat c ON c.userID = u.id  WHERE c.timeout > NOW()";
-	$dbh->exec($stmt);
+	// $stmt = "INSERT INTO money (userID, catID, amount) SELECT u.id, c.id, '".rand(10,100)."' FROM user u JOIN cat c ON c.userID = u.id  WHERE c.timeout > NOW()";
+	// $dbh->exec($stmt);
+
+
+	// get timeout cats and give user money for each one
+	$stmt = "SELECT c.id as catid, c.userID FROM cat c, user u WHERE c.userID = $userID AND c.userID = u.id AND c.timeout < NOW()";
+	$rows = $dbh->query($stmt);
+	foreach ($rows as $row) {
+		$randMoney = rand(0, 100);
+		$cid = $row["catid"];
+		$insert = "INSERT INTO money (userID, catID, amount) VALUES ($userID, $cid, $randMoney)";
+		$dbh->exec($insert);
+	}
+	
 
 	//timeout cats
-	// $stmt = "UPDATE cat SET userID=NULL, timeout=NULL WHERE timeout > NOW()";
-	// $dbh->exec($stmt);	
+	$stmt = "UPDATE cat SET userID=NULL, timeout=NULL WHERE timeout < NOW() AND userID = $userID";
+	$dbh->exec($stmt);	
 
 	// JSON to return
 	$json = array();
@@ -38,6 +50,7 @@
 		$stmt = "UPDATE cat SET userID=".$userID.", timeout=NOW() + INTERVAL 2	 HOUR WHERE id = ".$v['id'];
 		$dbh->exec($stmt);	
 		$json["new"] = $v;
+		$catID = $v["id"];
 	}
 
 	//give the user the money they have earned
@@ -55,7 +68,7 @@
 	if(count($newMoney)>0){		
 		$json["money"] = $newMoney;
 		//remove the displayed records
-		$stmt = "DELETE FROM money WHERE userID = ".$userID;
+		$stmt = "DELETE FROM money WHERE userID = $userID";
 		$dbh->exec($stmt);
 	}
 

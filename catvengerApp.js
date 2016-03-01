@@ -3,9 +3,13 @@ var catvengerApp = angular.module('catvenger', []);
 catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 	$scope.displayAbout = false;
 	$scope.notif = false;
+	$scope.user = $("#user").val();
+	$scope.money = $("#moneyfield").val();
+
 	$(function() {
 		$("#catarea").height($(document).height());
 		getLocation();
+		updateMoney();
 	});
 
 	$scope.openNotif = function() {
@@ -18,6 +22,11 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 		$("#money").empty().html("Check back later.");
 	}
 
+	$scope.home = function() {
+		$("#cats").empty();
+		getLocation();
+	}
+
 	//get the location for the user
 	function getLocation() {
 	    if (navigator.geolocation) {
@@ -26,7 +35,7 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 	        console.log("Geolocation is not supported by this browser.");
 	    }
 	}
-	
+
 	function getCats(position) {
 	    $.ajax("catService.php?lat=" + position.coords.latitude 
 		  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
@@ -40,6 +49,7 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 
 	function showCat(catArr) {
 		var area = $("#cats");
+		var catarea = $("#catarea");
 		for (var i = 0; i < catArr.length; i++) {
 			var thisCat = catArr[i];
 			if (thisCat.url.match(/\.png/)) {
@@ -58,11 +68,10 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 								}, stop: function (helper, ui) {
 						    		$(this).attr("src", this.src.replace(/_hang\.png/, ".png"));
 								}});
-	
-				// var randX = area.width() * Math.random();
-				// var randY = area.height() * Math.random();
+				var randX = Math.floor((catarea.width() / 3 - 100) * Math.random());
+				var randY = Math.floor((catarea.height() / 3 - 100) * Math.random());
 
-				// img.css({"top": randY + "px", "left": randX + "px"});
+				img.css({"top": randY + "px", "left": randX + "px"});
 				area.append(img);
 			}
 		}
@@ -70,15 +79,15 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 
 	function showCats(json) {
 		if (json) {
-
 			if (json.cats) {
 				showCat(json.cats);
 			}
 			if (json.new) {
 				newCat(json);
-				showCat(json.new);
+				var newCatArr = [];
+				newCatArr.push(json.new);
+				showCat(newCatArr);
 			}
-
 			if (json.money) {
 				newMoney(json);
 			}
@@ -97,7 +106,21 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 			var item = $("<li>").html(name + " gave you " + amount + " coins!");
 			list.append(item);
 		}
-		$("#money").append(list);
+		$("#money").empty().append(list);
+
+		updateMoney();
+		
+	}
+
+	function updateMoney() {
+		var userID = $("#userID").val();
+		$.ajax("service.php?userID=" + userID + "&mode=money")
+		.done(function(data) {
+			$scope.money = data;
+		})
+		.fail(function(x) {
+			console.log(x);
+		});
 	}
 
 	function newCat(json) {

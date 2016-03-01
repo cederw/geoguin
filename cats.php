@@ -1,12 +1,13 @@
 <?php 
 
 	session_start();
-	$user = $_SESSION["user"];
-	if (!isset($_SESSION["user"])) {
+	if (!isset($_SESSION["user"]) && !isset($_SESSION["userID"])) {
 		session_destroy();
 		header("Location: index.php");
-	}
+	} 
+	$user = $_SESSION["user"];
 	$userID = $_SESSION["userID"];
+	$money = $_SESSION["money"];
 
 	include("nav.php");
 
@@ -24,6 +25,8 @@
 
 		<div class="container" id="cat-container">
 			<input type="hidden" id="userID" value="<?=$userID?>">
+			<input type="hidden" id="user" value="<?=$user?>">
+			<input type="hidden" id="moneyfield" value="<?=$money?>">
 
 			<div id="catarea">
 				<div id="cats"></div>
@@ -58,19 +61,17 @@
 			  </div>
 			</div>
 
-
 			<div class="container">
-
 			  <div class="modal fade" id="notifications" role="dialog">
 			    <div class="modal-dialog">
-			    
 			      <div class="modal-content">
 			        <div class="modal-header">
 			          <button type="button" class="close" data-dismiss="modal">&times;</button>
-			          <h4 class="modal-title" id="money-title"></h4>
+			          <h4 class="modal-title" id="money-title">No notifications</h4>
 			        </div>
 			        <div class="modal-body">
 			        	<div id="money">
+			        	Check back later.
 						</div>
 			        </div>
 			        <div class="modal-footer">

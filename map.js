@@ -35,11 +35,11 @@ function getCats(position, map) {
 function placeCats(data, map) {
     var free = data.free;
     var owned = data.owned;
-    makeMarker(free, map);
-    makeMarker(owned, map);
+    makeMarker(free, map, true);
+    makeMarker(owned, map, false);
 }
 
-function makeMarker(catArr, map) {
+function makeMarker(catArr, map, avail) {
     for (var i = 0; i < catArr.length; i++) {
         var myCenter = new google.maps.LatLng(catArr[i].lat,catArr[i].lon);
         var catPic = catArr[i].url.replace("img", "mini");
@@ -47,13 +47,18 @@ function makeMarker(catArr, map) {
             position:myCenter,
             icon: catPic
         });
-        attachInfo(catArr[i], marker, map);
+        attachInfo(catArr[i], marker, map, avail);
     }
 }
 
-function attachInfo(cat, marker, map) {
+function attachInfo(cat, marker, map, avail) {
+    var content = cat.name + " lives here. Come pick them up!";
+    if (!avail) {
+        content = cat.name + " lives here, but is currently visiting someone. Check back later to pick up " + cat.name + "!";
+    }
+
     var infowindow = new google.maps.InfoWindow({
-        content: cat.name + " lives here. Come pick them up!"
+        content: content
     });
 
     marker.setMap(map);

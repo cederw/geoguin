@@ -39,10 +39,11 @@
 					<ul class="dropdown-menu">
 						
 						<li><a ng-click="openNotif()" href="#">Notifications</a></li>
-                        <li><a href="order.php">Order a Cat</a></li>
-                        <li><a href="map.php">Cat Scouter</a></li>
+                        <li><a id="order" href="order.php">Order a Cat</a></li>
+                        <li><a id="scout" href="map.php">Cat Scouter</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="logout.php">Logout</a></li>
+                        <li><a href="about.php">About Us</a></li>
 					</ul>
 				</li>
 				<?php 

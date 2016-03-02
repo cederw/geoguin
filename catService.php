@@ -8,11 +8,6 @@
 
 	$userID = htmlspecialchars($userID);
 
-	//give money
-	// $stmt = "INSERT INTO money (userID, catID, amount) SELECT u.id, c.id, '".rand(10,100)."' FROM user u JOIN cat c ON c.userID = u.id  WHERE c.timeout > NOW()";
-	// $dbh->exec($stmt);
-
-
 	// get timeout cats and give user money for each one
 	$stmt = "SELECT c.id as catid, c.userID FROM cat c, user u WHERE c.userID = $userID AND c.userID = u.id AND c.timeout < NOW()";
 	$rows = $dbh->query($stmt);
@@ -24,7 +19,8 @@
 	}
 	
 
-	//timeout cats
+	// timeout cats
+	// but only for current user (for teh efficiency)
 	$stmt = "UPDATE cat SET userID=NULL, timeout=NULL WHERE timeout < NOW() AND userID = $userID";
 	$dbh->exec($stmt);	
 
@@ -39,7 +35,7 @@
 	if (count($allCats) > 0) 
 	 	$json["cats"] = $allCats;
 
-	$stmt = "SELECT c.id, c.name, c.desc, c.url FROM cat c  WHERE (".$lat." BETWEEN lat - 0.0001 AND lat + 0.0001) AND (".$lon." BETWEEN lon - 0.0001 AND lon + 0.0001) AND userID IS NULL";
+	$stmt = "SELECT c.id, c.name, c.desc, c.url FROM cat c  WHERE (".$lat." BETWEEN lat - 0.0005 AND lat + 0.0005) AND (".$lon." BETWEEN lon - 0.0005 AND lon + 0.0005) AND userID IS NULL";
 	// insert one row	
 	$rows = $dbh->query($stmt);
 	foreach ($rows as $row) {

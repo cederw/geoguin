@@ -8,7 +8,7 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 
 	$(function() {
 		$("#catarea").height($(document).height());
-		getLocation();
+		getLocation(getCats);
 		updateMoney();
 	});
 
@@ -23,14 +23,14 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 	}
 
 	$scope.home = function() {
-		$("#cats").empty();
-		getLocation();
+		//$("#cats").empty();
+		getLocation(getNewCat);
 	}
 
 	//get the location for the user
-	function getLocation() {
+	function getLocation(f) {
 	    if (navigator.geolocation) {
-	        navigator.geolocation.getCurrentPosition(getCats);
+	        navigator.geolocation.getCurrentPosition(f);
 	    } else { 
 	        console.log("Geolocation is not supported by this browser.");
 	    }
@@ -41,6 +41,25 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 		  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
 		.done(function( data ) {
 			showCats(data);
+		})
+		.fail(function(x) {
+			console.log(x);
+		});
+	}
+
+
+	function getNewCat(position) {
+	    $.ajax("catService.php?lat=" + position.coords.latitude 
+		  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
+		.done(function( data ) {
+			if (data && data != "" && data.new) {
+				newCat(data.new);
+				var newCatArr = [];
+				newCatArr.push(data.new);
+				showCat(newCatArr);
+				console.log(data.new);
+				console.log(newCatArr);
+			}
 		})
 		.fail(function(x) {
 			console.log(x);
@@ -83,7 +102,7 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 				showCat(json.cats);
 			}
 			if (json.new) {
-				newCat(json);
+				newCat(json.new);
 				var newCatArr = [];
 				newCatArr.push(json.new);
 				showCat(newCatArr);
@@ -123,8 +142,7 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 		});
 	}
 
-	function newCat(json) {
-		var thisCat = json.new;
+	function newCat(thisCat) {
 		$scope.catName = thisCat.name;
 		$scope.catDesc = thisCat.desc;
 		$scope.catSrc = thisCat.url;

@@ -16,16 +16,17 @@
 <html ng-app="catvenger">
 	<head>
 		<?php include("head.php"); ?>
-		
-    	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+		<script src="http://maps.googleapis.com/maps/api/js"></script>
 		<script type="text/javascript" src="map.js"></script>
 	</head>
 
+	<body>
+	</body>
+
 	<body ng-controller="CatCtrl">
 		<?php nav(true, false); ?>
-
 		<div class="container" id="cat-container">
-			 <div id="map_canvas"></div>
+			<div id="googleMap" style="width:100vw;height:100vh;"></div>
 		</div>
 	</body>
 <html>

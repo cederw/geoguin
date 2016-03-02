@@ -6,6 +6,8 @@
 	$lon = $_GET['lon'];
 	$dbh = getDB();
 
+	$userID = htmlspecialchars($userID);
+
 	//give money
 	// $stmt = "INSERT INTO money (userID, catID, amount) SELECT u.id, c.id, '".rand(10,100)."' FROM user u JOIN cat c ON c.userID = u.id  WHERE c.timeout > NOW()";
 	// $dbh->exec($stmt);

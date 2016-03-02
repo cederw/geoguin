@@ -13,12 +13,21 @@
 	width: 100%;
 }
 
+.alert {
+	margin-top: 2em;
+}
+
 body {
 	/*background-color: #93E2D5;*/
 
 	margin: 0px;
 }
 
+.cat {
+	width: 11vw;
+	height: 15vh;
+	position: absolute;
+}
 
 #catarea {
 	position: relative;
@@ -46,12 +55,31 @@ body {
 	line-height: 60px;
 }
 
+form {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
 
-h1, #header {
+#header {
 	color: #1d1d1d;
 	font-family: catFont, Helvetica, sans-serif;
 	font-size: 28pt;
+	margin-top: 2em;
+    margin-bottom: 1em;
 	text-align: center;
+}
+
+#map-overlay {
+	background-color: rgba(255,255,255,.95);
+    border-radius: 5vw;
+	width: 80vw;
+	position: absolute;
+	top: 10vh;
+	left: 10vw;
+}
+
+#map-wrapper {
+	position: relative;
 }
 
 .modal-body div {
@@ -68,9 +96,6 @@ h1, #header {
 	font-family: catFont, Helvetica, sans-serif;
 }
 
-.cat {
-	/*max-width: 15vw;*/
-	width: 11vw;
-	height: 15vh;
-	position: absolute;
+#submit {
+	margin-top: 15px;
 }

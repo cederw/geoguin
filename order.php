@@ -7,6 +7,12 @@
 		header("Location: index.php");
 	}
 
+	if (isset($_GET["fail"])) {
+		$fail = true;
+	} else {
+		$fail = false;
+	}
+
 	include("common.php");
 ?>
 
@@ -14,7 +20,8 @@
 <html ng-app="catvenger">
 	<head>
 		<?php include("head.php"); ?>
-		<script type="text/javascript" src="map.js"></script>
+		<script src="http://maps.googleapis.com/maps/api/js"></script>
+		<script type="text/javascript" src="order.js"></script>
 	</head>
 
 	<body ng-controller="CatCtrl">
@@ -22,19 +29,24 @@
 
 		<div class="container">
 			<div class="row">
+				<?php if ($fail) { ?>
+				<div class="text-center alert alert-danger col-lg-6 col-lg-offset-3" role="alert">There was an error. Please try again</div> <?php } ?>
+				<div class="row">
+					<h1 id="header">Order a cat!</h1>
+				</div>
+				<div id="googleMap" style="width:100%;height:80vh;"></div>
+
 				<div class="col-md-4 col-md-offset-4">
-					<div class="row">
-						<h1>Order a cat!</h1>
-					</div>
+				
 					<div class="row">
 					<?php 
 						if (isset($_SESSION["money"]) && $_SESSION["money"] >= 100) { ?>
-						<form class="form-group" action="newCat.php">
-							<input class="form-control" type="text" name="name" placeholder="Name" />
-							<textarea class="form-control" name="desc" placeholder="Description"></textarea> 
-							<input id = "lat" type="hidden" name="lat" value="" />
-							<input id = "lon" type="hidden" name="lon" value="" />
-							<input class="form-control" id="submit" type="submit" value="Submit" />
+						<form class="form-group text-center" action="newCat.php" method="POST">
+							<input class="form-control" type="text" name="name" placeholder="Cat Name" />
+							<textarea class="form-control" name="desc" placeholder="Cat Description"></textarea> 
+							<input class="form-control" id="lat" type="hidden" name="lat" value="" />
+							<input class="form-control" id="lon" type="hidden" name="lon" value="" />
+							<button class="btn btn-default" id="submit" type="submit">Submit</button>
 						</form>
 					<?php } else if (isset($_SESSION["money"])) { ?>
 						You don't have enough money to order a cat! You need at least 100. You have <?= $_SESSION["money"] ?>.
@@ -47,21 +59,4 @@
 		</div>
 	</body>
 </html>
-
-<script>
-getLoc();
-$("#submit").attr("disabled", "disabled");
-function getLoc() {
-      if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(insertCoords);
-      } else { 
-          console.log("Geolocation is not supported by this browser.");
-      }
-  }
-  function insertCoords(position) {
-    $("#lat").val(position.coords.latitude);
-    $("#lon").val(position.coords.longitude);
-    $("#submit").removeAttr("disabled");
-  }
-</script>
 

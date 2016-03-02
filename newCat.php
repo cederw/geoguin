@@ -1,10 +1,10 @@
 <?php
 //new cat
-include("mysql_connect.php");
-	$name = $_GET['name'];
-	$desc = $_GET['desc'];
-	$lat = $_GET['lat'];
-	$lon = $_GET['lon'];
+	include("mysql_connect.php");
+	$name = $_POST['name'];
+	$desc = $_POST['desc'];
+	$lat = $_POST['lat'];
+	$lon = $_POST['lon'];
 	$dbh = getDB();
 
 	session_start();
@@ -12,7 +12,18 @@ include("mysql_connect.php");
 	if (!isset($_SESSION["user"])) {
 		session_destroy();
 		header("Location: index.php");
+		die();
 	}
+
+	if ($lat == "" || $lon == "") {
+		header("Location: order.php?fail=true");
+		die();
+	}
+
+	$name = htmlspecialchars($name);
+	$desc = htmlspecialchars($desc);
+	$name = preg_replace("/'/", "\'", $name);
+	$desc = preg_replace("/'/", "\'", $desc);
 
 	$money = $_SESSION["money"];
 	$userID = $_SESSION["userID"];
@@ -27,12 +38,9 @@ include("mysql_connect.php");
 	$stmt = "UPDATE user SET money=money-100 WHERE id = ".$userID;
 	$dbh->exec($stmt);
 
-	$url;
-	$stmt = "SELECT url FROM cat ORDER BY RAND() LIMIT 1;";
-	$rows = $dbh->query($stmt);
-	foreach ($rows as $row) {
-		$url = $row['url'];
-	}
+	$urlArr = glob("img/*_hang.png");
+	$url = $urlArr[array_rand($urlArr)];
+	$url = preg_replace("/_hang\.png$/", ".png", $url);
 
 	$stmt = "INSERT INTO cat (lat, lon, name, `desc`, url, userID, timeout) VALUES (".$lat.",".$lon.",'".$name."','".$desc."','".$url."',".$userID.", NOW() + INTERVAL 2 HOUR)";
 	$dbh->exec($stmt);

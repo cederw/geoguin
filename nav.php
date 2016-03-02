@@ -40,7 +40,7 @@
 						
 						<li><a ng-click="openNotif()" href="#">Notifications</a></li>
                         <li><a href="order.php">Order a Cat</a></li>
-                        <li><a href="map.php">Scout Cats</a></li>
+                        <li><a href="map.php">Cat Scouter</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="logout.php">Logout</a></li>
 					</ul>

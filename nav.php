@@ -33,9 +33,9 @@
         	   <?php 
         			if ($cats) { 
 				?>
-            	<li id="exclaim" ng-click="openNotif()" ng-show="notif"><img src="img/catcoin.png" /></li>
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user}} (<img src='img/catcoin.png'>{{money}})<span class="caret"></span></a>
+                    
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img id="exclaim" src="img/catcoin_icon.png" ng-click="openNotif()" ng-show="notif" alt="cat coin" />{{user}} (<img src='img/catcoin.png'>{{money}})<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						
 						<li><a ng-click="openNotif()" href="#">Notifications</a></li>

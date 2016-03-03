@@ -11,8 +11,8 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 
 	$(function() {
 		$("#catarea").height($(document).height());
-		
-		setInterval(getLocation(getCats), 10000);
+		getLocation(getCats);
+		setInterval(getLocation(getNewCat), 10000);
 		updateMoney();
 	});
 
@@ -42,9 +42,7 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 
 	function getCats(position) {
 		//abs
-		if(Math.abs($scope.lat-position.coords.latitude)>0.0005||Math.abs($scope.lon-position.coords.longitude)>0.0005){
-			$scope.lat = position.coords.latitude;
-			$scope.lon = position.coords.latitude;
+		
 
 			$.ajax("catService.php?lat=" + position.coords.latitude 
 			  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
@@ -54,7 +52,7 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 			.fail(function(x) {
 				console.log(x);
 			});
-		}
+		
 
 
 	    
@@ -62,21 +60,26 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 
 
 	function getNewCat(position) {
-	    $.ajax("catService.php?lat=" + position.coords.latitude 
-		  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
-		.done(function( data ) {
-			if (data && data != "" && data.new) {
-				newCat(data.new);
-				var newCatArr = [];
-				newCatArr.push(data.new);
-				showCat(newCatArr);
-				console.log(data.new);
-				console.log(newCatArr);
-			}
-		})
-		.fail(function(x) {
-			console.log(x);
-		});
+		if(Math.abs($scope.lat-position.coords.latitude)>0.0005||Math.abs($scope.lon-position.coords.longitude)>0.0005){
+			$scope.lat = position.coords.latitude;
+			$scope.lon = position.coords.latitude;
+
+		    $.ajax("catService.php?lat=" + position.coords.latitude 
+			  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
+			.done(function( data ) {
+				if (data && data != "" && data.new) {
+					newCat(data.new);
+					var newCatArr = [];
+					newCatArr.push(data.new);
+					showCat(newCatArr);
+					console.log(data.new);
+					console.log(newCatArr);
+				}
+			})
+			.fail(function(x) {
+				console.log(x);
+			});
+		}
 	}
 
 	function showCat(catArr) {

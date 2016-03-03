@@ -6,9 +6,13 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 	$scope.user = $("#user").val();
 	$scope.money = $("#moneyfield").val();
 
+	$scope.lat = 1;
+	$scope.loc = 1;
+
 	$(function() {
 		$("#catarea").height($(document).height());
-		getLocation(getCats);
+		
+		setInterval(getLocation(getCats), 10000);
 		updateMoney();
 	});
 
@@ -37,14 +41,23 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 	}
 
 	function getCats(position) {
-	    $.ajax("catService.php?lat=" + position.coords.latitude 
-		  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
-		.done(function( data ) {
-			showCats(data);
-		})
-		.fail(function(x) {
-			console.log(x);
-		});
+		//abs
+		if(Math.abs($scope.lat-position.coords.latitude)>0.0005||Math.abs($scope.lon-position.coords.longitude)>0.0005){
+			$scope.lat = position.coords.latitude;
+			$scope.lon = position.coords.latitude;
+
+			$.ajax("catService.php?lat=" + position.coords.latitude 
+			  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
+			.done(function( data ) {
+				showCats(data);
+			})
+			.fail(function(x) {
+				console.log(x);
+			});
+		}
+
+
+	    
 	}
 
 

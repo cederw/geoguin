@@ -44,6 +44,10 @@
                         <li role="separator" class="divider"></li>
                         <li><a href="logout.php">Logout</a></li>
                         <li><a href="about.php">About Us</a></li>
+                        <li><audio controls autoplay>
+                          <source src="happy_0.mp3" type="audio/mpeg">
+                          Your browser does not support the audio element.
+                        </audio> </li>
 					</ul>
 				</li>
 				<?php 

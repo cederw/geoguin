@@ -42,20 +42,14 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 
 	function getCats(position) {
 		//abs
-		
-
-			$.ajax("catService.php?lat=" + position.coords.latitude 
-			  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
-			.done(function( data ) {
-				showCats(data);
-			})
-			.fail(function(x) {
-				console.log(x);
-			});
-		
-
-
-	    
+		$.ajax("catService.php?lat=" + position.coords.latitude 
+		  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
+		.done(function( data ) {
+			showCats(data);
+		})
+		.fail(function(x) {
+			console.log(x);
+		});
 	}
 
 

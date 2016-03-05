@@ -30,8 +30,8 @@
 		<div class="container">
 			<div class="row">
 				<?php if ($fail) { ?>
-				<div class="text-center alert alert-danger col-lg-6 col-lg-offset-3" role="alert">There was an error. Please try again</div> <?php } ?>
-				<div class="row">
+				<div class="col-lg-12 col-mg-12 text-center alert alert-danger col-lg-6 col-lg-offset-3" role="alert">There was an error. You probably missed a field or didn't choose a location. Please try again</div> <?php } ?>
+				<div class="col-lg-12 col-mg-12 ">
 					<h1 id="header">Order a cat!</h1>
 				</div>
 				<div id="googleMap" style="width:100%;height:80vh;"></div>

@@ -1,8 +1,7 @@
 <?php
 	include("mysql_connect.php");
-
-	$userID = $_GET["userID"];
 	$mode = $_GET["mode"];
+	$userID = $_GET["userID"];
 	$lat = $_GET["lat"];
 	$lon = $_GET["lon"];
 
@@ -13,8 +12,12 @@
 
 	$dbh = getDB();
 
+	$quserID = $dbh->quote($userID);
+	$qlat = $dbh->quote($lat);
+	$qlon = $dbh->quote($lon);
+
 	if ($mode == "money") {
-		$stmt = "SELECT money FROM user WHERE id = '$userID'";
+		$stmt = "SELECT money FROM user WHERE id = $quserID";
 		$rows = $dbh->query($stmt);
 		foreach ($rows as $row) {
 			$_SESSION["money"] = $row["money"];
@@ -25,7 +28,7 @@
 
 	if ($mode == "location" && isset($lat) && isset($lon)) {
 		$stmt = "SELECT * FROM cat c  
-		WHERE (".$lat." BETWEEN lat - 0.1 AND lat + 0.1) AND (".$lon." BETWEEN lon - 0.1 AND lon + 0.1)";
+		WHERE ($qlat BETWEEN lat - 0.1 AND lat + 0.1) AND ($qlon BETWEEN lon - 0.1 AND lon + 0.1)";
 		// insert one row	
 		$rows = $dbh->query($stmt);
 		$owned = array();

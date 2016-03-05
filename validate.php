@@ -10,20 +10,22 @@
 
 	$user = htmlspecialchars($_POST["user"]);
 	$pw = htmlspecialchars($_POST["password"]);
-	$money = 0;
 	$conn = getDB();
+	$quser = $conn->quote($user);
+	$qpw = $conn->quote($pw);
+	$money = 0;
 	try {
-		$stmt = "SELECT * FROM user WHERE name = '$user'";
+		$stmt = "SELECT * FROM user WHERE name = $quser";
 		$rows = $conn->query($stmt);
 		$count = $rows->rowCount();
 		if ($count == 0) {
 			// add user
 			$sql = "INSERT INTO user (name, password) 
-					VALUES ('" . $user . "', '" . $pw . "')";
+					VALUES ($quser, $qpw)";
 			$conn->exec($sql);
 		} 
 
-		$stmt = "SELECT * FROM user WHERE name = '$user'";
+		$stmt = "SELECT * FROM user WHERE name = $quser";
 		$rows = $conn->query($stmt);
 
 		$found = false;

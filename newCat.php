@@ -25,6 +25,12 @@
 	$name = preg_replace("/'/", "\'", $name);
 	$desc = preg_replace("/'/", "\'", $desc);
 
+	$qlat = $dbh->quote($lat);
+	$qlon = $dbh->quote($lon);
+	$quserID = $dbh->quote($userID);
+	$qname = $dbh->quote($name);
+	$qdesc = $dbh->quote($desc);
+
 	$money = $_SESSION["money"];
 	$userID = $_SESSION["userID"];
 	if($money>=100){
@@ -35,14 +41,15 @@
 		header("Location: cats.php");
 	}
 
-	$stmt = "UPDATE user SET money=money-100 WHERE id = ".$userID;
+	$stmt = "UPDATE user SET money=money-100 WHERE id = $quserID";
 	$dbh->exec($stmt);
 
 	$urlArr = glob("img/*_hang.png");
 	$url = $urlArr[array_rand($urlArr)];
 	$url = preg_replace("/_hang\.png$/", ".png", $url);
+	$qurl = $dbh->quote($url);
 
-	$stmt = "INSERT INTO cat (lat, lon, name, `desc`, url, userID, timeout) VALUES (".$lat.",".$lon.",'".$name."','".$desc."','".$url."',".$userID.", NOW() + INTERVAL 2 HOUR)";
+	$stmt = "INSERT INTO cat (lat, lon, name, `desc`, url, userID, timeout) VALUES ($qlat, $qlon, $qname, $qdesc, $qurl, $quserID, NOW() + INTERVAL 2 HOUR)";
 	$dbh->exec($stmt);
 
 	// finished, so go back to home

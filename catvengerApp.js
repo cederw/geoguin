@@ -6,13 +6,13 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 	$scope.user = $("#user").val();
 	$scope.money = $("#moneyfield").val();
 
-	$scope.lat = 1;
-	$scope.loc = 1;
+	$scope.lat;
+	$scope.lon;
 
 	$(function() {
 		$("#catarea").height($(document).height());
 		getLocation(getCats);
-		setInterval(getLocation(getNewCat), 10000);
+		setInterval(pickUpNew, 10000);
 		updateMoney();
 	});
 
@@ -28,7 +28,7 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 
 	$scope.home = function() {
 		//$("#cats").empty();
-		getLocation(getNewCat);
+		getLocation(ajaxNewCat);
 	}
 
 	//get the location for the user
@@ -41,7 +41,10 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 	}
 
 	function getCats(position) {
-		//abs
+		$scope.lat = position.coords.latitude;
+		$scope.lon = position.coords.longitude;
+		$scope.$apply();
+
 		$.ajax("catService.php?lat=" + position.coords.latitude 
 		  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
 		.done(function( data ) {
@@ -52,28 +55,35 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 		});
 	}
 
+	function pickUpNew() {
+		getLocation(getNewCat);
+	}
 
 	function getNewCat(position) {
-		if(Math.abs($scope.lat-position.coords.latitude)>0.0005||Math.abs($scope.lon-position.coords.longitude)>0.0005){
+		if (Math.abs($scope.lat-position.coords.latitude) > 0.0005
+				|| Math.abs($scope.lon-position.coords.longitude) > 0.0005) {
 			$scope.lat = position.coords.latitude;
 			$scope.lon = position.coords.latitude;
-
-		    $.ajax("catService.php?lat=" + position.coords.latitude 
-			  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
-			.done(function( data ) {
-				if (data && data != "" && data.new) {
-					newCat(data.new);
-					var newCatArr = [];
-					newCatArr.push(data.new);
-					showCat(newCatArr);
-					console.log(data.new);
-					console.log(newCatArr);
-				}
-			})
-			.fail(function(x) {
-				console.log(x);
-			});
+			ajaxNewCat(position);
+		} else {
+			console.log("did not move");
 		}
+	}
+
+	function ajaxNewCat(position) {
+		 $.ajax("catService.php?lat=" + position.coords.latitude 
+			  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
+		.done(function( data ) {
+			if (data && data != "" && data.new) {
+				newCat(data.new);
+				var newCatArr = [];
+				newCatArr.push(data.new);
+				showCat(newCatArr);
+			}
+		})
+		.fail(function(x) {
+			console.log(x);
+		});
 	}
 
 	function showCat(catArr) {

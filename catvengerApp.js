@@ -4,7 +4,8 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 	$scope.displayAbout = false;
 	$scope.notif = false;
 	$scope.user = $("#user").val();
-	$scope.money = $("#moneyfield").val();
+	// $scope.money = $("#moneyfield").val();
+	updateMoney();
 
 	$scope.lat;
 	$scope.lon;
@@ -45,8 +46,13 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 		$scope.lon = position.coords.longitude;
 		$scope.$apply();
 
-		$.ajax("catService.php?lat=" + position.coords.latitude 
-		  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
+		var postD = {
+			userid: $("#userID").val(),
+			lat: position.coords.latitude,
+			lon: position.coords.longitude
+		};
+
+		$.post("catService.php", postD)
 		.done(function( data ) {
 			showCats(data);
 		})
@@ -71,8 +77,13 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 	}
 
 	function ajaxNewCat(position) {
-		 $.ajax("catService.php?lat=" + position.coords.latitude 
-			  		+ "&lon=" + position.coords.longitude + "&userid="+$("#userID").val())
+		var postD = {
+			userid: $("#userID").val(),
+			lat: position.coords.latitude,
+			lon: position.coords.longitude
+		};
+
+		 $.post("catService.php", postD)
 		.done(function( data ) {
 			if (data && data != "" && data.new) {
 				newCat(data.new);
@@ -152,10 +163,15 @@ catvengerApp.controller("CatCtrl", ['$scope', function($scope) {
 	}
 
 	function updateMoney() {
+		var postD = {
+			userid: $("#userID").val(),
+			mode: "money"
+		};
 		var userID = $("#userID").val();
-		$.ajax("service.php?userID=" + userID + "&mode=money")
+		$.post("service.php", postD)
 		.done(function(data) {
 			$scope.money = data;
+			$scope.$apply();
 		})
 		.fail(function(x) {
 			console.log(x);

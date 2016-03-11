@@ -57,7 +57,12 @@ function placeMarker(location, map, str) {
 }
 
 function getCats(position, map) {
-    $.ajax("service.php?mode=location&lat="+position.coords.latitude+"&lon="+position.coords.longitude)
+    var postD = {
+        mode: "location",
+        lat: position.coords.latitude,
+        lon: position.coords.longitude
+    };
+    $.post("service.php", postD)
     .done(function(data) {
         placeCats(data, map);
     })

@@ -1,9 +1,9 @@
 <?php
 	include("mysql_connect.php");
-	$mode = $_GET["mode"];
-	$userID = $_GET["userID"];
-	$lat = $_GET["lat"];
-	$lon = $_GET["lon"];
+	$mode = $_POST["mode"];
+	$userID = $_POST["userid"];
+	$lat = $_POST["lat"];
+	$lon = $_POST["lon"];
 
 
 	if (!isset($mode)) {

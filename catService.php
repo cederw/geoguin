@@ -1,9 +1,9 @@
 <?php
 	header('Content-Type: application/json');
 	include("mysql_connect.php");
-	$userID = $_GET['userid'];
-	$lat = $_GET['lat'];
-	$lon = $_GET['lon'];
+	$userID = $_POST['userid'];
+	$lat = $_POST['lat'];
+	$lon = $_POST['lon'];
 	$dbh = getDB();
 
 	$userID = htmlspecialchars($userID);

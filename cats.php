@@ -7,7 +7,7 @@
 	} 
 	$user = $_SESSION["user"];
 	$userID = $_SESSION["userID"];
-	$money = $_SESSION["money"];
+	// $money = $_SESSION["money"];
 
 	include("nav.php");
 
@@ -27,7 +27,7 @@
 		<div class="container" id="cat-container">
 			<input type="hidden" id="userID" value="<?=$userID?>">
 			<input type="hidden" id="user" value="<?=$user?>">
-			<input type="hidden" id="moneyfield" value="<?=$money?>">
+			<input type="hidden" id="moneyfield" value="{{money}}">
 
 			<div id="catarea">
 				<div id="cats"></div>

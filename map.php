@@ -16,7 +16,9 @@
 <html ng-app="catvenger">
 	<head>
 		<?php include("head.php"); ?>
-		<script src="http://maps.googleapis.com/maps/api/js"></script>
+
+    	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsEOBEHWnYx80lrABX6ngLFZO73bwoMRU"></script>
+
 		<script type="text/javascript" src="map.js"></script>
 	</head>
 

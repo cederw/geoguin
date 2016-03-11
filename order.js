@@ -1,6 +1,6 @@
 
 $(function() {
-    google.maps.event.addDomListener(window, 'load', getLoc);   
+    new google.maps.event.addDomListener(window, 'load', getLoc);   
 });
 
 function getLoc() {

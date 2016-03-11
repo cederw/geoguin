@@ -28,7 +28,7 @@
 
 	if ($mode == "location" && isset($lat) && isset($lon)) {
 		$stmt = "SELECT * FROM cat c  
-		WHERE ($qlat BETWEEN lat - 0.1 AND lat + 0.1) AND ($qlon BETWEEN lon - 0.1 AND lon + 0.1)";
+		WHERE ($qlat BETWEEN lat - 0.5 AND lat + 0.5) AND ($qlon BETWEEN lon - 0.5 AND lon + 0.5)";
 		// insert one row	
 		$rows = $dbh->query($stmt);
 		$owned = array();
